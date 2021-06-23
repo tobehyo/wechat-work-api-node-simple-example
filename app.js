@@ -2,9 +2,8 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
-import dotenv from "dotenv";
 import wechatRouter from "./routes/wechatRouter.js";
-dotenv.config();
+import { PORT } from "./utils/globalVariable.js";
 
 const app = express();
 app.use(morgan("dev"));
@@ -28,6 +27,6 @@ app.use((err, req, res, next) => {
 
 app.use("/wechat", wechatRouter);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Running on PORT ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Running on PORT ${PORT}`);
 });

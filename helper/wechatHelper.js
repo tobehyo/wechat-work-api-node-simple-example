@@ -1,5 +1,9 @@
 import fetch from "node-fetch";
 import fs from "fs/promises";
+import {
+  WECHAT_WORK_CORPID,
+  WECHAT_WORK_CORPSECRET,
+} from "../utils/globalVariable.js";
 
 const PATH_ACCESS_TOKEN_JSON = "./accessToken.json";
 
@@ -37,7 +41,7 @@ async function getToken(tokenClear) {
   const accessToken = await readAccessTokenJson();
   if (accessToken.access_token !== "") return accessToken.access_token;
   console.log("call accessTokenURL");
-  const accessTokenURL = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${process.env.WECHAT_CORPID}&corpsecret=${process.env.WECHAT_CORPSECRET}`;
+  const accessTokenURL = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${WECHAT_WORK_CORPID}&corpsecret=${WECHAT_WORK_CORPSECRET}`;
 
   try {
     const response = await fetch(accessTokenURL);
