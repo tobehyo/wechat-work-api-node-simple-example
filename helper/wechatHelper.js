@@ -8,6 +8,11 @@ import {
 const PATH_ACCESS_TOKEN_JSON = "./accessToken.json";
 
 async function readAccessTokenJson() {
+  await fs.access(PATH_ACCESS_TOKEN_JSON).catch(async (err) => {
+    // if file not exist, write file.
+    await clearAccessTokenJson();
+  });
+
   try {
     const accessToken = await fs.readFile(PATH_ACCESS_TOKEN_JSON);
     return JSON.parse(accessToken.toString());
@@ -26,10 +31,7 @@ async function writeAccessTokenJson(jsonData) {
 
 async function clearAccessTokenJson() {
   try {
-    const accessToken = readAccessTokenJson();
-    accessToken.access_token = "";
-
-    await fs.writeFile(PATH_ACCESS_TOKEN_JSON, JSON.stringify(accessToken));
+    await fs.writeFile(PATH_ACCESS_TOKEN_JSON, `{"access_token":""}`);
   } catch (error) {
     console.error("Failed to read file", error);
   }
