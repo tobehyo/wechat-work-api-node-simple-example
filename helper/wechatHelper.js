@@ -86,7 +86,9 @@ async function sendMessageToWeChatWork(users, message, newToken) {
       return sendMessageToWeChatWork(users, message, true);
     }
     if (resultMsg.errcode > 0) {
-      resultMsg.errmsg = "user & party & tag all invalid";
+      console.error(resultMsg);
+      const errorMsg = resultMsg.errmsg.split(",");
+      resultMsg.errmsg = errorMsg[0];
     }
     return resultMsg;
   } catch (error) {
