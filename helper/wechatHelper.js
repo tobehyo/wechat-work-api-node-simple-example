@@ -25,7 +25,7 @@ async function writeAccessTokenJson(jsonData) {
   try {
     await fs.writeFile(PATH_ACCESS_TOKEN_JSON, JSON.stringify(jsonData));
   } catch (error) {
-    console.error("Failed to read file", error);
+    console.error("Failed to write file", error);
   }
 }
 
@@ -33,7 +33,7 @@ async function clearAccessTokenJson() {
   try {
     await fs.writeFile(PATH_ACCESS_TOKEN_JSON, `{"access_token":""}`);
   } catch (error) {
-    console.error("Failed to read file", error);
+    console.error("Failed to write file", error);
   }
 }
 
