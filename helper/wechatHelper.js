@@ -84,7 +84,7 @@ async function sendMessageToWeChatWork(users, message, newToken) {
 
     const resultMsg = await response.json();
 
-    if (resultMsg.errcode === 42001) {
+    if (resultMsg.errcode === 42001 || resultMsg.errcode === 40014) {
       return sendMessageToWeChatWork(users, message, true);
     }
     if (resultMsg.errcode > 0) {
