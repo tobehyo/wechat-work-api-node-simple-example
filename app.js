@@ -14,6 +14,29 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.raw());
 
+app.use(function (req, res, next) {
+  const contentType = req.headers["content-type"] || "";
+  const mime = contentType.split(";")[0];
+
+  if (mime === "text/xml") {
+    var data = "";
+    req.setEncoding("utf8");
+    req.on("data", function (chunk) {
+      data += chunk;
+    });
+    req.on("end", function () {
+      try {
+        req.xmlJsonBody = JSON.parse(data);
+        next();
+      } catch (error) {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
+
 app.use((err, req, res, next) => {
   if (err) {
     if (err.type === "entity.parse.failed") {
